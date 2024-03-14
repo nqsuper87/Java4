@@ -1,6 +1,9 @@
 package com.fpoly;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Iterator;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,17 +39,45 @@ public class MyServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("Do Post");
+		
 		doGet(request, response);
 	}
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("@@@@ Service");
+		
+		System.out.println("getContextPath:" + request.getContextPath());
+		System.out.println("getRequestURI:" + request.getRequestURI());
+		System.out.println("getRequestURL:" + request.getRequestURL());
+		
+		Enumeration<String> names = request.getParameterNames();
+		
+		
+		while(names.hasMoreElements()) {
+			String name = names.nextElement();
+			String value = request.getParameter(name);
+			
+			System.out.println("name" + name);
+			System.out.println("value" + value);
+		}
+	
+		
+		
 		String method = request.getMethod();
 		System.out.println(method);
-		//doGet(request, response);
+		
+		if(method.equals("POST")) {
+			// TODO Auto-generated method stub
+			String name = request.getParameter("fullname");
+			String[] hobbies = request.getParameterValues("hobbies");
+			
+			System.out.println("Fullname: " + name);
+				
+			for (int i = 0; i < hobbies.length; i++) {
+				System.out.println("Hobbies: " + hobbies[i]);
+			}
+		}
 	}
 
 }
