@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class LoginServlet
@@ -59,17 +60,19 @@ public class LoginServlet extends HttpServlet {
 		
 		if(email.equals("fpoly@fpt.edu.vn") && password.equals("fpolycantho")) {
 			//userid is PC07654 - Võ Quốc An
-			ck = new Cookie("userid","PC07654");
+			//ck = new Cookie("userid","PC07654");
+			HttpSession session = request.getSession();
+			session.setAttribute("name","Quoc An");
+			request.getRequestDispatcher("/views/Home.jsp").forward(request, response);
 		}
 		else {
-			ck = new Cookie("userid","");
+			//ck = new Cookie("userid","");
+			request.setAttribute("error", "Dang nhap sai email va password");
+			request.getRequestDispatcher("/views/Login.jsp").forward(request, response);
 		}
-		
-		ck.setMaxAge(10*3600);
-		ck.setPath("/");
-		response.addCookie(ck);
-		
-		doGet(request, response);
+//		ck.setMaxAge(10*3600);
+//		ck.setPath("/");
+//		response.addCookie(ck);
+		//doGet(request, response);
 	}
-
 }

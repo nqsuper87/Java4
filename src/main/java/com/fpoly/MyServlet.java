@@ -1,6 +1,7 @@
 package com.fpoly;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
 
@@ -46,6 +47,10 @@ public class MyServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("@@@@ Service");
+		
+		Date now = new Date();
+		
+		
 		
 		System.out.println("getContextPath:" + request.getContextPath());
 		System.out.println("getRequestURI:" + request.getRequestURI());
