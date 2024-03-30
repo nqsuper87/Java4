@@ -23,6 +23,7 @@ public class User {
 	
 	@Column(name="Admin")
 	Boolean admin = false;
+	
 
 	public String getId() {
 		return id;

@@ -18,17 +18,40 @@ public class UserDAO {
 	}
 	
 	public User create(User entity) {
-		em.persist(entity);
+		try {
+			em.getTransaction().begin();
+			em.persist(entity);
+			em.getTransaction().commit();
+		}
+		catch (Exception e) {
+			em.getTransaction().rollback();
+		}
+		
 		return entity;
 	}
 	
 	public User update(User entity) {
-		em.merge(entity);
+		try {
+			em.getTransaction().begin();
+			em.merge(entity);
+			em.getTransaction().commit();
+		}
+		catch (Exception e) {
+			em.getTransaction().rollback();
+		}
 		return entity;
 	}
 	
 	public User delete(User entity) {
-		em.remove(entity);
+		try {
+			em.getTransaction().begin();
+			em.remove(entity);
+			em.getTransaction().commit();
+		}
+		catch (Exception e) {
+			em.getTransaction().rollback();
+		}
+		
 		return entity;
 	}
 	
@@ -38,7 +61,7 @@ public class UserDAO {
 	}
 	
 	public List<User> findAll() {
-		String jpql = "SELECT u FROM USER u";
+		String jpql = "SELECT u FROM User u";
 		TypedQuery<User> uQuery = em.createQuery(jpql,User.class);
 		return uQuery.getResultList();
 	}

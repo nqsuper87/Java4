@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 public class JPAUtils {
 	private static EntityManagerFactory factory;
 	static public EntityManager getEntityManager() {
-		if(factory == null && !factory.isOpen()) {
+		if(factory == null || !factory.isOpen()) {
 			factory = Persistence.createEntityManagerFactory("PolyOE");
 		}
 		return factory.createEntityManager();
