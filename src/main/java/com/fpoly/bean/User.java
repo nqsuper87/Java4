@@ -1,8 +1,11 @@
 package com.fpoly.bean;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -10,7 +13,7 @@ import javax.persistence.Table;
 public class User {
 	@Id
 	@Column(name="Id")
-	String id;
+	Integer id;
 	
 	@Column(name="Password")
 	String password;
@@ -24,12 +27,15 @@ public class User {
 	@Column(name="Admin")
 	Boolean admin = false;
 	
+	@OneToMany(mappedBy = "user")
+	List<Favourite> favourites;
 
-	public String getId() {
+	
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -64,4 +70,14 @@ public class User {
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
+
+	public List<Favourite> getFavourites() {
+		return favourites;
+	}
+
+	public void setFavourites(List<Favourite> favourites) {
+		this.favourites = favourites;
+	}
+	
+	
 }

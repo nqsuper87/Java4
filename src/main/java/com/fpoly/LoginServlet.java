@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fpoly.bean.Favourite;
 import com.fpoly.bean.User;
 import com.fpoly.bean.Video;
 
@@ -44,15 +45,44 @@ public class LoginServlet extends HttpServlet {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("PolyOE");
 		EntityManager em = factory.createEntityManager();
 		
-		String jpql = "Select u from User u";
-		TypedQuery<User> usersQuery = em.createQuery(jpql,User.class);
-		//Tra ve ket qua cua user list
-		List<User> users = usersQuery.getResultList();
-		
-		for (User user : users) {
-			System.out.println("Fullname: " + user.getFullname());
-			System.out.println("Email: " + user.getEmail());
+		User user = em.find(User.class, 2);
+		if(user != null) {
+			List<Favourite> favourites = user.getFavourites();
+			
+			for (int i = 0; i < favourites.size(); i++) {
+				System.out.println("User name: " + favourites.get(i).getUser().getFullname());
+				System.out.println("Email:" + favourites.get(i).getUser().getEmail());
+			}
 		}
+		//Tim video duoc yeu thich boi user id ...
+		int findId = 1;
+		String jpql = "SELECT f.video FROM Favourite f WHERE f.user.id = :id";
+		TypedQuery<Video> videosQuery = em.createQuery(jpql,Video.class);
+		videosQuery.setParameter("id", findId);
+		List<Video> videos = videosQuery.getResultList();
+		
+		
+		
+		for (int i = 0; i < videos.size(); i++) {
+			
+			if(i==0) {
+				System.out.println("Danh sach video yeu thich cua userid: " + findId);
+			}
+			
+			System.out.println("Tên video: " + videos.get(i).getTitle());
+			System.out.println("Mô tả:" + videos.get(i).getDescription());
+		}
+		
+		
+//		String jpql = "Select u from User u";
+//		TypedQuery<User> usersQuery = em.createQuery(jpql,User.class);
+//		//Tra ve ket qua cua user list
+//		List<User> users = usersQuery.getResultList();
+//		
+//		for (User user : users) {
+//			System.out.println("Fullname: " + user.getFullname());
+//			System.out.println("Email: " + user.getEmail());
+//		}
 		
 		
 		Cookie[] cookies = request.getCookies();
@@ -88,24 +118,24 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("name","Quoc An");
 			
-			Video v = new Video();
-			v.setTitle("Fpoly Youtube");
-			v.setViews(10);
+//			Video v = new Video();
+//			v.setTitle("Fpoly Youtube");
+//			v.setViews(10);
+//			
+//			Video v1 = new Video();
+//			v1.setTitle("Can Tho Youtube");
+//			v1.setViews(15);
+//			
+//			Video v2 = new Video();
+//			v2.setTitle("Java 4 Youtube");
+//			v2.setViews(20);
 			
-			Video v1 = new Video();
-			v1.setTitle("Can Tho Youtube");
-			v1.setViews(15);
+//			List<Video> videos = new ArrayList<Video>();
+//			videos.add(v1);
+//			videos.add(v2);
+//			videos.add(v);
 			
-			Video v2 = new Video();
-			v2.setTitle("Java 4 Youtube");
-			v2.setViews(20);
-			
-			List<Video> videos = new ArrayList<Video>();
-			videos.add(v1);
-			videos.add(v2);
-			videos.add(v);
-			
-			request.setAttribute("videos", videos);
+//			request.setAttribute("videos", videos);
 			//session.setAttribute("videos", videos);
 				
 			request.getRequestDispatcher("/views/Home.jsp").forward(request, response);

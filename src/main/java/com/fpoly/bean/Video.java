@@ -1,37 +1,78 @@
 package com.fpoly.bean;
 
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity @Table(name="Video")
 public class Video {
+	@Id
+	Integer id;
 	String title;
-	String url;
-	String imageURL;
-	int views;
+	String poster;
+	String description;
+	Integer views;
+	Boolean active = true;
 	
+	@OneToMany(mappedBy = "video")
+	List<Favourite> favourites;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getUrl() {
-		return url;
+
+	public String getPoster() {
+		return poster;
 	}
-	public void setUrl(String url) {
-		this.url = url;
+
+	public void setPoster(String poster) {
+		this.poster = poster;
 	}
-	public String getImageURL() {
-		return imageURL;
+
+	public String getDescription() {
+		return description;
 	}
-	public void setImageURL(String imageURL) {
-		this.imageURL = imageURL;
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	public int getViews() {
+
+	public Integer getViews() {
 		return views;
 	}
-	public void setViews(int views) {
+
+	public void setViews(Integer views) {
 		this.views = views;
 	}
-	
-	
-	
-	
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public List<Favourite> getFavourites() {
+		return favourites;
+	}
+
+	public void setFavourites(List<Favourite> favourites) {
+		this.favourites = favourites;
+	}
 }
